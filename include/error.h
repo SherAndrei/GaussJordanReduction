@@ -1,6 +1,6 @@
 #pragma once
 
-int print_input_error(const char* error_name, int error_number);
+int print_input_error(const char* error_name, const int error_number);
 #define INPUT_ERROR(num)    \
   print_input_error(#num, num)
 

@@ -3,7 +3,7 @@
 
 static int error_code = 0;
 
-int print_input_error(const char* error_name, int error_number) {                 
+int print_input_error(const char* error_name, const int error_number) {                 
     printf("Wrong input %s: %d\n", error_name, error_number);
     return --error_code;
 }

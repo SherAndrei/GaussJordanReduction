@@ -10,7 +10,8 @@ SRC 	:= ./src
 
 #Compiler features
 CC     := gcc
-CFLAGS := -g -O0 -Werror -Wextra -Wpedantic -Wall -I$(INCLUDE)
+CFLAGS :=  -Werror -Wextra -Wpedantic -Wall -I$(INCLUDE)
+LIBS   := -lm
 
 #Variables
 EXE  := $(BIN)/main
@@ -26,12 +27,15 @@ $(EXE): $(OBJS) | $(BIN)
 	$(CC) $^ -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) $(LIBS)
 
 $(BIN) $(OBJ):
 	$(MKDIR) $@
 
-.PHONY: clean
+.PHONY: clean debug
 
 clean:
 	$(RMDIR) $(OBJ) $(BIN)
+
+debug: CFLAGS += -g -O0
+debug: $(EXE)

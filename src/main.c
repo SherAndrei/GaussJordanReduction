@@ -31,9 +31,8 @@ int main(int argc, const char* argv[])
             const char* filename = argv[4];
             if((error_code = fill_from_file(matrix, dim, filename)) != 1)
                 return error_code;
-        // } else if(formula_name > 0 || formula_name < 5 ) {
-        //     if(fill_with_formula(matrix, dim, formula_name) == NULL);
-        //         return error_code;
+        } else if(formula_name > 0 || formula_name < 5 ) {
+            fill_with_formula(matrix, dim, formula_name);
         } else
             return INPUT_ERROR(formula_name);
 

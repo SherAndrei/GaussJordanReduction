@@ -1,4 +1,4 @@
 #pragma once
 
-int fill_from_file(double* matrix, int dim, const char* filename);
-// double* fill_with_formula(double* matrix, int dim, int formula_name);
+int fill_from_file(double* matrix, const int dim, const char* filename);
+void fill_with_formula(double* matrix, const int dim, int formula_name);

@@ -1,3 +1,3 @@
 #pragma once
 
-void print_matrix(double* matrix, int Nrows, int Ncolumns, int print_value);
+void print_matrix(const double* matrix, const int Nrows, const int Ncolumns, const int print_value);
