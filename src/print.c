@@ -1,6 +1,6 @@
 #include "print.h"
+#include "solve.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -16,12 +16,16 @@ void print_matrix(const double* matrix, const int Nrows, const int Ncolumns, con
     printf("\n");
 }
 
-void print_all(const double* matrix, const double* answer, const int dim, const double residual, const int print_value, float time)
+void print_all(double* matrix, double* answer, const int dim, const int print_value, float time)
 {
         printf("==================================\n\n");
         print_matrix(matrix, dim, dim, print_value);
         print_matrix(answer, 1, dim, print_value);
-        printf("Time of solving: %f\n", time);
-        printf("Residual norm  : %10.3e\n", residual);
-        // printf("Differense norm: %10.3e", diff());
+        printf("Time of solving : %6.3f sec\n", time);
+        printf("Differense norm : %10.3e\n", diff(dim, answer));
 }   
+
+void print_residual(double* matrix, const double* r_part, const int dim, double* answer)
+{ 
+    printf("Residual norm   : %10.3e\n", residual(dim, matrix, r_part, answer)); 
+}

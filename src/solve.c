@@ -61,9 +61,26 @@ int solve(const int dim, double* matrix, double* answer)
             }
         }   
     }
+    return 0;
 }
 
-double residual(const int dim, double* matrix, double* r_part, double* answer)
+double residual(const int dim, double* matrix,const double* r_part,const double* answer)
 {
-    return 0.;
+    //Вычисляем AX-b
+    for(int i = 0; i < dim; i++) {
+        for(int j = 0; j < dim; j++) {
+            Matrix(i,0) +=  Matrix(i,j)*answer[j];
+        }
+        Matrix(i,0) -= r_part[i];
+    }
+    return norm(matrix, dim, 1) / norm(r_part, 1, dim);
+
+}
+
+double diff(const int dim, double* answer)
+{
+    for(int i = 0; i < dim; i+=2) {
+        answer[i] -= 1;
+    }
+    return norm(answer, 1, dim);
 }

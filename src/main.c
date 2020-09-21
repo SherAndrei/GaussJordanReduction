@@ -30,8 +30,7 @@ int main(int argc, const char* argv[])
         }
         int formula_name = atoi(argv[3]);
         if(formula_name == 0) {
-            const char* filename = argv[4];
-            if((error_code = fill_from_file(matrix, dim, filename)) != 1)
+            if((error_code = fill_from_file(matrix, dim, argv[4])) != 1)
                 return error_code;
         } else if(formula_name > 0 || formula_name < 5 ) {
             fill_with_formula(matrix, dim, formula_name);
@@ -48,18 +47,30 @@ int main(int argc, const char* argv[])
         }
         fill_answer(right_part, answer,  dim);
 
+        //Печатаем то, что было до
         print_matrix(matrix, dim ,dim , print_value);
         print_matrix(right_part, 1, dim, print_value);
+        
+        //Засекаем время и решаем
         time_t start, end;
         start = clock();
         if(solve(dim, matrix, answer) < 0)
             return FUNC_ERROR("Matrix is degenerate!");
         end = clock();
-        
+    
+
+        //Печатаем результат
         print_all(matrix, answer, dim,
-                  residual(dim, matrix, right_part, answer),
                   print_value, ((float)(end - start))/CLOCKS_PER_SEC                
                   );
+
+        //Возвращаем матрицу на место для вычисления невязки
+        if (formula_name == 0) 
+             fill_from_file(matrix, dim, argv[4]);
+        else fill_with_formula(matrix, dim, formula_name);
+
+        print_residual(matrix, right_part, dim, answer);
+
         free(matrix);
         free(right_part);
         free(answer);

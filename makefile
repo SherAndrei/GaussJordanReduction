@@ -10,8 +10,7 @@ SRC 	:= ./src
 
 #Compiler features
 CC     := gcc
-CFLAGS :=  -Wextra -Wpedantic -Wall -I$(INCLUDE)
- #-Werror
+CFLAGS := -Werror -Wextra -Wpedantic -Wall -I$(INCLUDE)
 LIBS   := -lm
 
 #Variables
@@ -25,18 +24,20 @@ OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 # -c flag says to generate the object file
 
 $(EXE): $(OBJS) | $(BIN)
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ $(LIBS)
 
 $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
-	$(CC) -c $< -o $@ $(CFLAGS) $(LIBS)
+	$(CC) -c $< -o $@ $(CFLAGS) 
 
 $(BIN) $(OBJ):
 	$(MKDIR) $@
 
-.PHONY: clean debug
+.PHONY: clean debug release
 
 clean:
 	$(RMDIR) $(OBJ) $(BIN)
 
 debug: CFLAGS += -g -O0
 debug: $(EXE)
+release: CFLAGS += -O3
+release: $(EXE)
