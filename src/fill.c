@@ -36,3 +36,12 @@ void fill_with_formula(double* matrix, const int dim, const int formula_name){
         break;
     }
 }
+
+void fill_right_part(const double* matrix, double* right_part, const int dim)
+{
+    for(int i = 0; i < dim; i++) {
+        for(int k = 0; k < (dim + 1)/2; k++) {
+            right_part[i] += Matrix(i, 2*k + 1, dim);
+        }
+    }
+}

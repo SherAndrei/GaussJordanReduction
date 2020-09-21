@@ -14,7 +14,7 @@ int main(int argc, const char* argv[])
     else {
         int error_code = 0;
         double* matrix;
-        // double *right_part;
+        double *right_part;
         int dim          = atoi(argv[1]);
         if (dim < 0)
             return INPUT_ERROR(dim);
@@ -23,8 +23,8 @@ int main(int argc, const char* argv[])
         if (print_value > dim || print_value < 0)
             return INPUT_ERROR(print_value);
 
-        if((matrix = alloc_matrix(dim)) == NULL) {
-            return FUNC_ERROR("malloc");
+        if((matrix = alloc_matrix(dim, dim)) == NULL) {
+            return FUNC_ERROR("malloc matrix");
         }
         int formula_name = atoi(argv[3]);
         if(formula_name == 0) {
@@ -36,11 +36,17 @@ int main(int argc, const char* argv[])
         } else
             return INPUT_ERROR(formula_name);
 
-        // right_part = create_right_part(matrix, dim);
-        
+        if((right_part = alloc_matrix(1, dim)) == NULL) {
+            return FUNC_ERROR("malloc matrix");
+        }
+        fill_right_part(matrix, right_part, dim);
+
         //double* answer = solve linear equastion
         print_matrix(matrix, dim, dim, print_value);
+        print_matrix(right_part, 1, dim, print_value);
         // print_matrix(answer, 1, dim, print_value);
+        free(matrix);
+        free(right_part);
     }
 
 }
