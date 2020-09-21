@@ -5,7 +5,9 @@
 #include "error.h"
 #include "print.h"
 #include "fill.h"
+#include "solve.h"
 #include <stdlib.h>
+#include <time.h>
 
 int main(int argc, const char* argv[])
 {
@@ -14,7 +16,7 @@ int main(int argc, const char* argv[])
     else {
         int error_code = 0;
         double* matrix;
-        double *right_part;
+        double *right_part, *answer;
         int dim          = atoi(argv[1]);
         if (dim < 0)
             return INPUT_ERROR(dim);
@@ -37,16 +39,30 @@ int main(int argc, const char* argv[])
             return INPUT_ERROR(formula_name);
 
         if((right_part = alloc_matrix(1, dim)) == NULL) {
-            return FUNC_ERROR("malloc matrix");
+            return FUNC_ERROR("malloc right part");
         }
         fill_right_part(matrix, right_part, dim);
 
-        //double* answer = solve linear equastion
-        print_matrix(matrix, dim, dim, print_value);
+        if((answer = alloc_matrix(1, dim)) == NULL) {
+            return FUNC_ERROR("malloc right part");
+        }
+        fill_answer(right_part, answer,  dim);
+
+        print_matrix(matrix, dim ,dim , print_value);
         print_matrix(right_part, 1, dim, print_value);
-        // print_matrix(answer, 1, dim, print_value);
+        time_t start, end;
+        start = clock();
+        if(solve(dim, matrix, answer) < 0)
+            return FUNC_ERROR("Matrix is degenerate!");
+        end = clock();
+        
+        print_all(matrix, answer, dim,
+                  residual(dim, matrix, right_part, answer),
+                  print_value, ((float)(end - start))/CLOCKS_PER_SEC                
+                  );
         free(matrix);
         free(right_part);
+        free(answer);
     }
 
 }

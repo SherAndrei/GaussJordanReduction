@@ -10,7 +10,8 @@ SRC 	:= ./src
 
 #Compiler features
 CC     := gcc
-CFLAGS :=  -Werror -Wextra -Wpedantic -Wall -I$(INCLUDE)
+CFLAGS :=  -Wextra -Wpedantic -Wall -I$(INCLUDE)
+ #-Werror
 LIBS   := -lm
 
 #Variables
