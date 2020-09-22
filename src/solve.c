@@ -2,7 +2,9 @@
 #include "print.h"
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
+//Поменять местами элемент lhs и rhs
 void swap(double* lhs, double* rhs) 
 {
     double temp = *lhs;
@@ -10,12 +12,14 @@ void swap(double* lhs, double* rhs)
     *rhs = temp;
 }
 
+//Поменять местами строчку lhs и rhs в матрице
 void swap_lines(double* matrix, const int dim, int lhs, int rhs) {
     for (int j = 0; j < dim; j++) {
         swap(&(Matrix(lhs, j)), &(Matrix(rhs, j)));
     }
 }
 
+//Найти корни и записать в answer
 int solve(const int dim, double* matrix, double* answer)
 {
     double coef;
@@ -64,11 +68,21 @@ int solve(const int dim, double* matrix, double* answer)
     }
     return 0;
 }
+//Норма вектора
+double  norm(const double* vector, const int length)
+{
+    double result = 0.;
+    for(int i = 0; i < length; ++i) {
+            result += (vector[i] * vector[i]);
+    }
+    return sqrt(result);
+}
 
-double residual(const int dim,const double* matrix,const double* r_part,const double* answer)
+//Норма невязки
+double residual(const int dim, const double* matrix,const double* r_part,const double* answer)
 {
     double result[dim];
-    //Инициализируем все нулями
+    //Заполняем весь массив нулями
     memset(result, 0. ,dim*sizeof(double));
     //Вычисляем AX-b
     for(int i = 0; i < dim; i++) {
@@ -76,16 +90,19 @@ double residual(const int dim,const double* matrix,const double* r_part,const do
         for(int j = 0; j < dim; j++) {
             result[i] = result[i] + (Matrix(i,j) * answer[j]);
         }
+        //Вычитаем b_i
         result[i] -= r_part[i];
     }
 
     return norm(result, dim) / norm(r_part, dim);
 }
 
-double diff(const int dim, double* answer)
+//Норма разности с ответом
+double difference(const int dim, double* answer)
 {
     for(int i = 0; i < dim; i+=2) {
         answer[i] -= 1;
     }
     return norm(answer, dim);
 }
+

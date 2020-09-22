@@ -35,7 +35,7 @@ int main(int argc, const char* argv[])
         } else if(formula_name > 0 || formula_name < 5 ) {
             fill_with_formula(matrix, dim, formula_name);
         } else
-            return INPUT_ERROR(formula_name);
+            return INPUT_ERROR(formula_name);   
 
         if((right_part = alloc_matrix(1, dim)) == NULL) {
             return FUNC_ERROR("malloc right part");
@@ -61,7 +61,7 @@ int main(int argc, const char* argv[])
 
         //Печатаем результат
         print_all(matrix, answer, dim,
-                  print_value, ((float)(end - start))/CLOCKS_PER_SEC                
+                  print_value, ((float)(end - start))/ CLOCKS_PER_SEC                
                   );
 
         //Возвращаем матрицу на место для вычисления невязки

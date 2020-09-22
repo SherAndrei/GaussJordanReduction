@@ -4,6 +4,7 @@
 #include "matrix.h"
 #include <stdio.h>
 
+//заполнить матрицу с файла filename
 int fill_from_file(double* matrix, const int dim, const char* filename) {
     FILE* inp;
     if((inp = fopen(filename, "r")) == NULL) 
@@ -22,6 +23,7 @@ int fill_from_file(double* matrix, const int dim, const char* filename) {
     return 1;
 }
 
+//заполнить матрицу с помощью формулы номер formula_name
 void fill_with_formula(double* matrix, const int dim, const int formula_name){
     switch (formula_name)
     {
@@ -38,6 +40,7 @@ void fill_with_formula(double* matrix, const int dim, const int formula_name){
     }
 }
 
+//заполнить правую часть с помощью формулы из условия
 void fill_right_part(const double* matrix, double* right_part, const int dim)
 {
     for(int i = 0; i < dim; i++) {
@@ -47,6 +50,8 @@ void fill_right_part(const double* matrix, double* right_part, const int dim)
         }
     }
 }
+//заполняем вектор ответа правой частью для дальнейшей работы с ним, а не с вектором правой части
+// так как он нужен для подсчета нормы невязки
 void fill_answer(const double* const right_part, double* answer, const int dim)
 {
     for(int i = 0; i < dim; i++) {
