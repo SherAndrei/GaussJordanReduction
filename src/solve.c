@@ -1,6 +1,7 @@
 #include "matrix.h"
 #include "print.h"
 #include <stdio.h>
+#include <string.h>
 
 void swap(double* lhs, double* rhs) 
 {
@@ -64,17 +65,21 @@ int solve(const int dim, double* matrix, double* answer)
     return 0;
 }
 
-double residual(const int dim, double* matrix,const double* r_part,const double* answer)
+double residual(const int dim,const double* matrix,const double* r_part,const double* answer)
 {
+    double result[dim];
+    //Инициализируем все нулями
+    memset(result, 0. ,dim*sizeof(double));
     //Вычисляем AX-b
     for(int i = 0; i < dim; i++) {
+        //Складываем все a_ijx
         for(int j = 0; j < dim; j++) {
-            Matrix(i,0) +=  Matrix(i,j)*answer[j];
+            result[i] = result[i] + (Matrix(i,j) * answer[j]);
         }
-        Matrix(i,0) -= r_part[i];
+        result[i] -= r_part[i];
     }
-    return norm(matrix, dim, 1) / norm(r_part, 1, dim);
 
+    return norm(result, dim) / norm(r_part, dim);
 }
 
 double diff(const int dim, double* answer)
@@ -82,5 +87,5 @@ double diff(const int dim, double* answer)
     for(int i = 0; i < dim; i+=2) {
         answer[i] -= 1;
     }
-    return norm(answer, 1, dim);
+    return norm(answer, dim);
 }

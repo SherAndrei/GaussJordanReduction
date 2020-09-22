@@ -70,6 +70,7 @@ int main(int argc, const char* argv[])
         else fill_with_formula(matrix, dim, formula_name);
 
         print_residual(matrix, right_part, dim, answer);
+        print_difference(dim, answer);
 
         free(matrix);
         free(right_part);
