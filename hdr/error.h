@@ -7,4 +7,3 @@ int print_input_error(const char* error_name, const int error_number);
 int print_function_error(const char* error_func_name);
 #define FUNC_ERROR(name)    \
   print_function_error(name)
-  

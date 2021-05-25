@@ -5,7 +5,7 @@ RMDIR := rm -rf
 #Folders to make life easier
 BIN 	:= ./bin
 OBJ 	:= ./obj
-INCLUDE := ./include
+INCLUDE := ./hdr
 SRC 	:= ./src
 
 #Compiler features
@@ -16,7 +16,7 @@ LIBS   := -lm
 #Variables
 EXE  := $(BIN)/main
 SRCS := $(wildcard $(SRC)/*.c)
-OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))	
+OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
 
 # $@ - the left side of the :
 # $^ - the right side of the :
@@ -27,7 +27,7 @@ $(EXE): $(OBJS) | $(BIN)
 	$(CC) $^ -o $@ $(LIBS)
 
 $(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
-	$(CC) -c $< -o $@ $(CFLAGS) 
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(BIN) $(OBJ):
 	$(MKDIR) $@
